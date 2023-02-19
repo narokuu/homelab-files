@@ -1,0 +1,11 @@
+.ansible
+.cache
+.config
+.local
+.ssh
+get-pip.py
+.profile
+.bashrc
+.bash_logout
+.bash_history
+.gitconfig
