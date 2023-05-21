@@ -1,0 +1,1 @@
+ls -File -Recurse | ? lastwritetime -lt (Get-Date).AddDays(-30) | Remove-Item -WhatIf
