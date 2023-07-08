@@ -1,11 +1,5 @@
 (device.accountEnabled -eq True) and (device.deviceManagementAppId -eq ["0000000a-0000-0000-c000-000000000000"]) and (device.deviceOwnership -eq "Company") and (device.deviceOSType -eq "Windows") and (device.deviceOSVersion -notIn ["10.0.22"])
 
-
-
-
-
 Win 11: (Fixed)
-
-
 
 (device.accountEnabled -eq True) and (device.deviceManagementAppId -eq "0000000a-0000-0000-c000-000000000000") and (device.deviceOwnership -eq "Company") and (device.deviceOSType -eq "Windows") and (device.deviceOSVersion -startsWith "10.0.22")
