@@ -1,0 +1,14 @@
+version: '3'
+services:
+  ftb-direwolf20:
+    image: itzg/minecraft-server  # Example image, you might need a different one
+    environment:
+      EULA: "TRUE"
+      TYPE: "FTB"
+      FTB_MODPACK_ID: "<modpack_id>"  # Replace with the ID of Direwolf20's pack
+      MEMORY: "4G"  # Set memory limit as needed
+    volumes:
+      - ./data:/data  # Maps the local 'data' directory to the container's data directory
+    ports:
+      - "25565:25565"  # Minecraft server default port
+    restart: unless-stopped
