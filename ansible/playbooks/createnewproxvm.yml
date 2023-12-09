@@ -1,0 +1,25 @@
+---
+- name: Create a VM on Proxmox
+  hosts: proxmox
+  gather_facts: no
+  tasks:
+    - name: Create a new VM
+      community.general.proxmox_kvm:
+        api_user: root@pam
+        api_password: #your proxmox password
+        api_host: # your promox IP
+        validate_certs: no
+        node: pve #name of your node
+        vmid: 100 # vm ID number
+        name: test_vm # name your vm here
+        sockets: 1   # number of sockets
+        cores: 4    #number of cores
+        memory: 16384 #16G of ram
+        ostype: l26  # Linux 2.6/3.x/4.x kernel, suitable for modern Linux distributions
+        scsi: '{"scsi0": "nvme-storage:64"}' # this creates a single 64G storage drive on "nvme storage"
+        agent: 1  # Enable QEMU Guest Agent
+        net: '{"net0": "virtio,bridge=vmbr0"}'  # Default network setup
+        ide: '{"ide2": "local:iso/ubuntu-22.04.3-live-server-amd64.iso,media=cdrom"}'  # Attach Ubuntu ISO (change for you need)
+        onboot: yes #this setting makes the vm boot when proxmox starts
+        state: present
+      delegate_to: localhost

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #set -x
-IPMIHOST=
-IPMIUSER=
-IPMIPW=
+IPMIHOST=   # IP for the idrac 
+IPMIUSER=   # Idrac user name
+IPMIPW=     #idrac password 
 IPMIEK=0000000000000000000000000000000000000000
 
 FANSPEEDHEX="0x08"
