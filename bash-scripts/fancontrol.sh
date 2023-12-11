@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #set -x
-IPMIHOST=192.168.0.22  #IP for the idrac 
+IPMIHOST=  #IP for the idrac 
 IPMIUSER=  #Idrac user name
 IPMIPW=  #idrac password 
 IPMIEK=0000000000000000000000000000000000000000
@@ -9,7 +9,7 @@ FANSPEEDHEX="0x08"
 MAXTEMP=60
 HYSTERESIS=12
 
-FANFILE=/home/narokuu/autofan.log
+FANFILE= #path to fan file
 
 function ipmi() {
         ipmitool -I lanplus -H "$IPMIHOST" -U "$IPMIUSER" -P "$IPMIPW" "$@"
