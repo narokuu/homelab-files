@@ -1,0 +1,49 @@
+#!/bin/bash
+#
+#    10-sysinfo - generate the system information
+#    Copyright (c) 2013 Nick Charlton
+#
+#    Authors: Nick Charlton <hello@nickcharlton.net>
+#             Dustin Kirkland <kirkland@canonical.com>
+#
+#    Modified by tigattack for personal use cases.
+#    Adopted by Narokuu for the Yanks
+
+date=$(date +"%a %b %d %Y %T")
+load=$(awk '{print $1}' '/proc/loadavg')
+root_usage=$(df -h / | awk '/\// {print $(NF-1)}')
+memory_usage=$(free -m | awk '/Mem:/ { total=$2; used=$3 } END { printf("%3.1f%%", used/total*100)}')
+
+swap_usage=$(free -m | awk '/Swap/ { printf("%3.1f%%", $3/$2*100) }')
+time=$(uptime -p | cut -c 4-)
+processes=$(ps aux --no-headers | wc -l)
+
+updates_available=$(apt list --upgradable 2>/dev/null | expr "$(wc -l)" - 1)
+aptupdatetime=$(stat "/var/cache/apt/pkgcache.bin" | grep 'Modify' | cut -d' ' -f2,3,4 | date -f - +"%a %d/%m/%y %H:%M")
+
+echo "SysInfo as of $date:"
+echo
+printf "System Load:\t%s\tMemory Usage:\t%s\n" "$load" "$memory_usage"
+printf "Processes:\t%s\tSystem Uptime:\t%s\n" "$processes" "$time"
+printf "Usage on '/':\t%s\tSwap Usage:\t%s\n" "$root_usage" "$swap_usage"
+echo
+
+# New lines are outputted by the following commands as default;
+# no need to output them manually (i.e. with `echo`, as above).
+if test "$updates_available"; then
+  if ! grep -q '0' <<< "$updates_available"; then
+    if [ "$updates_available" -eq "1" ]; then
+      update_status="$updates_available update available"
+    else
+      update_status="$updates_available updates available"
+    fi
+  else
+    update_status='Up to date'
+  fi
+fi
+
+echo -e "Patch status (updated $aptupdatetime): $update_status"
+
+if test -f /var/run/reboot-required; then
+	echo "*** System restart required ***"
+fi

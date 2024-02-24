@@ -1,0 +1,10 @@
+For Debian Vms
+
+Remove:
+/etc/motd
+
+everything in /etc/update-motd.d/
+
+then place these 3 files into /etc/update-motd.d/
+
+chmod =X all the files.
